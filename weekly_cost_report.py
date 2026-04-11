@@ -5,6 +5,8 @@ import argparse, os, sys
 from collections import defaultdict
 from datetime import datetime, timedelta
 import httpx
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="/home/ubuntu/langgraph-team/.env")
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -136,12 +138,23 @@ def post_to_slack(graph_path, summary_text, dry_run=False):
         if not r.json().get("ok"):
             print(f"  Slack失敗: {r.json().get('error')}")
             return False
-        with open(graph_path, "rb") as f:
-            r2 = client.post("https://slack.com/api/files.upload",
+        file_size = os.path.getsize(graph_path)
+        ru = client.post("https://slack.com/api/files.getUploadURLExternal",
+            headers={"Authorization": f"Bearer {SLACK_BOT_TOKEN}"},
+            data={"filename": "weekly_cost.png", "length": file_size})
+        if not ru.json().get("ok"):
+            print(f"  画像URL取得失敗: {ru.json().get('error')}")
+        else:
+            upload_url = ru.json()["upload_url"]
+            file_id = ru.json()["file_id"]
+            with open(graph_path, "rb") as img_f:
+                client.put(upload_url, content=img_f.read(),
+                    headers={"Content-Type": "application/octet-stream"})
+            rc = client.post("https://slack.com/api/files.completeUploadExternal",
                 headers={"Authorization": f"Bearer {SLACK_BOT_TOKEN}"},
-                data={"channels": SLACK_CHANNEL, "filename": "weekly_cost.png"},
-                files={"file": f})
-        print(f"  画像投稿: {'OK' if r2.json().get('ok') else r2.json().get('error')}")
+                json={"files": [{"id": file_id}], "channel_id": SLACK_CHANNEL})
+            ok = rc.json().get("ok")
+            print(f"  画像投稿: OK" if ok else f"  画像投稿: {rc.json().get('error')}")
     return True
 
 
