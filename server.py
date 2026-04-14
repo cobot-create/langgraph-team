@@ -1,10 +1,11 @@
 """
 LangGraph AI Team — Slack Bot + FastAPI Server
-Events API (HTTP Webhook) 対応版 v4
+Events API (HTTP Webhook) 対応版 v5
 SL-151/152/153: get_session_id() によるスレッド記憶継続対応
+SL-161: #ai-ops 即時自動トリガー強化（message イベント対応）
 """
 from __future__ import annotations
-import json, logging, os, threading, uuid
+import json, logging, os, subprocess, threading, uuid
 from contextlib import asynccontextmanager
 from datetime import datetime
 from dotenv import load_dotenv
@@ -19,7 +20,13 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(na
 logger = logging.getLogger("langgraph-team")
 
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN", "")
+AI_OPS_CHANNEL_ID = os.getenv("SLACK_CHANNEL_AI_OPS_ID", "C0AL5DRAY15")
 AI_OPS_CHANNEL = os.getenv("SLACK_CHANNEL_AI_OPS", "ai-ops")
+
+# SL-161: 自動トリガーフィルタキーワード
+AI_OPS_TRIGGER_KEYWORDS = ["🎯", "【指令】", "【instruction】"]
+# Bot自身のユーザーIDを環境変数で管理（自己応答ループ防止）
+BOT_USER_ID = os.getenv("SLACK_BOT_USER_ID", "")
 slack_client = None
 
 if SLACK_BOT_TOKEN:
@@ -61,7 +68,7 @@ def run_langgraph(query, slack_channel="", slack_thread_ts="", session_id=None, 
     }
     logger.info(f"Starting LangGraph: session_id={resolved_session_id}, agent_name={agent_name}, query={query[:80]}")
     final_state = None
-    for step in langgraph_app.stream(initial_state, {"recursion_limit": 15}):
+    for step in langgraph_app.stream(initial_state, {"recursion_limit": 15, "configurable": {"thread_id": resolved_session_id}}):
         for node_name, node_output in step.items():
             for msg in node_output.get("messages", []):
                 logger.info(f"[{node_name}] {(msg.content if hasattr(msg, 'content') else str(msg))[:200]}")
@@ -96,6 +103,81 @@ async def slack_events(request: Request):
     event = body.get("event", {})
     event_type = event.get("type", "")
     logger.info(f"Received event type: {event_type}")
+
+    # SL-161: #ai-ops message イベント → 自動トリガー
+    if event_type == "message" and slack_client:
+        channel = event.get("channel", "")
+        text = event.get("text", "")
+        user = event.get("user", "")
+        ts = event.get("ts", "")
+        subtype = event.get("subtype", "")
+
+        # #ai-ops チャンネルへの新規投稿のみ対象（Bot自身・編集・削除は除外）
+        is_ai_ops = channel == AI_OPS_CHANNEL_ID
+        is_new_msg = not subtype  # subtypeなし = 新規投稿
+        is_not_bot = user != BOT_USER_ID and not event.get("bot_id")
+        has_trigger = any(kw in text for kw in AI_OPS_TRIGGER_KEYWORDS)
+
+        if is_ai_ops and is_new_msg and is_not_bot and has_trigger:
+            session_id = f"slack-ai-ops-{ts}"
+            logger.info(f"SL-161 ai-ops trigger: session_id={session_id}, text={text[:100]}")
+
+            # 受信確認を即座に返信
+            try:
+                slack_client.chat_postMessage(
+                    channel=channel,
+                    text=f"⚡ #ai-ops 自動トリガー起動\nsession_id: `{session_id}`\n処理中..."
+                )
+            except Exception as e:
+                logger.error(f"Trigger ack error: {e}")
+
+            def _run_ai_ops_trigger():
+                try:
+                    result = run_langgraph(text, channel, ts, session_id=session_id, agent_name="ai-ops-trigger")
+                    final_msg = ""
+                    if result and "messages" in result:
+                        for msg in result["messages"]:
+                            content = msg.content if hasattr(msg, "content") else str(msg)
+                            final_msg += content + "\n"
+
+                    # a. Mem0に記録
+                    try:
+                        from tools_mem0 import mem0_write
+                        mem0_write(
+                            content=f"ai-ops auto-trigger: {text[:200]} → {final_msg[:200]}",
+                            user_id="ai-team",
+                            metadata={"type": "ai_ops_trigger", "session_id": session_id,
+                                      "date": datetime.now().strftime("%Y-%m-%d")}
+                        )
+                    except Exception as e:
+                        logger.error(f"Mem0 write error: {e}")
+
+                    # b. progress.md 更新 & Git push
+                    try:
+                        progress_path = os.path.join(os.path.dirname(__file__), "progress.md")
+                        entry = (f"\n### auto-trigger {datetime.now().strftime('%Y-%m-%d %H:%M')} JST\n"
+                                 f"- session_id: {session_id}\n"
+                                 f"- query: {text[:100]}\n"
+                                 f"- result: {final_msg[:150]}\n")
+                        with open(progress_path, "a") as f:
+                            f.write(entry)
+                        repo_dir = os.path.dirname(__file__)
+                        subprocess.run(["git", "add", "progress.md"], cwd=repo_dir, check=True)
+                        subprocess.run(["git", "commit", "-m", f"auto-trigger: {session_id}"],
+                                       cwd=repo_dir, check=True)
+                        subprocess.run(["git", "push", "origin", "main"], cwd=repo_dir, check=True)
+                    except Exception as e:
+                        logger.error(f"Git push error: {e}")
+
+                    # c. #ai-ops に結果報告
+                    report = f"✅ ai-ops auto-trigger 完了\n`{session_id}`\n\n{final_msg[:2000]}" if final_msg else f"✅ ai-ops auto-trigger 完了\n`{session_id}`"
+                    slack_client.chat_postMessage(channel=channel, text=report)
+
+                except Exception as e:
+                    logger.error(f"ai-ops trigger error: {e}")
+                    slack_client.chat_postMessage(channel=channel, text=f"❌ auto-trigger エラー: {e}")
+
+            threading.Thread(target=_run_ai_ops_trigger, daemon=True).start()
 
     if event_type == "app_mention" and slack_client:
         text = event.get("text", "")
@@ -143,7 +225,7 @@ async def slack_events(request: Request):
 
 @fastapi_app.get("/health")
 async def health():
-    return {"status": "ok", "session_id": SESSION_ID, "mode": "events_api_v4_session_id_support"}
+    return {"status": "ok", "session_id": SESSION_ID, "mode": "events_api_v5_ai_ops_trigger"}
 
 @fastapi_app.post("/run")
 async def run_api(request: Request):

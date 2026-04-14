@@ -18,6 +18,9 @@ from nodes import (
     supervisor_node,
 )
 from state import TeamState
+import os
+import sqlite3
+from langgraph.checkpoint.sqlite import SqliteSaver
 
 
 def route_from_supervisor(state: TeamState) -> str:
@@ -117,7 +120,10 @@ def build_graph() -> StateGraph:
 def compile_graph():
     """グラフをコンパイルして返す。"""
     graph = build_graph()
-    return graph.compile()
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "checkpoints.db")
+    conn = sqlite3.connect(db_path, check_same_thread=False)
+    checkpointer = SqliteSaver(conn)
+    return graph.compile(checkpointer=checkpointer)
 
 
 # シングルトン

@@ -44,7 +44,7 @@ def run_query(query: str, session_id: str = "SL-128") -> dict:
     print(f"{'='*60}\n")
 
     final_state = None
-    for step in app.stream(initial_state, {"recursion_limit": 15}):
+    for step in app.stream(initial_state, {"recursion_limit": 15, "configurable": {"thread_id": session_id}}):
         for node_name, node_output in step.items():
             msgs = node_output.get("messages", [])
             for msg in msgs:
