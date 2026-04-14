@@ -34,29 +34,47 @@ def get_project_config(project_id: str) -> dict:
         "safe_mode": True,
         "allowed_commands": DEFAULT_ALLOWED,
     }
+    if not project_id:
+        return default
     try:
-        resp = requests.post(
-            f"{MEM0_API_URL}/search",
-            headers={"Content-Type": "application/json",
-                     "Authorization": f"Bearer {MEM0_API_KEY}"},
-            json={"query": f"project_config {project_id}",
-                  "user_id": MEM0_USER_ID, "limit": 5},
-            timeout=10,
-        )
-        for r in resp.json().get("results", []):
-            meta = r.get("metadata", {})
-            if meta.get("type") == "project_config":
-                pid = meta.get("project_id", "")
-                if pid in (project_id, "default"):
-                    return {
-                        "project_id": meta.get("project_id", project_id),
-                        "langgraph": meta.get("langgraph", True),
-                        "auto_execute": meta.get("auto_execute", False),
-                        "safe_mode": meta.get("safe_mode", True),
-                        "allowed_commands": meta.get("allowed_commands", DEFAULT_ALLOWED),
-                    }
+        # 改善: project_id完全一致 + メモリテキスト含む検索
+        for query in [f"project_config {project_id}", f"{project_id} langgraph auto_execute"]:
+            resp = requests.post(
+                f"{MEM0_API_URL}/search",
+                headers={"Content-Type": "application/json",
+                         "Authorization": f"Bearer {MEM0_API_KEY}"},
+                json={"query": query,
+                      "user_id": MEM0_USER_ID, "limit": 8},
+                timeout=10,
+            )
+            for r in resp.json().get("results", []):
+                meta = r.get("metadata", {})
+                mem_text = r.get("memory", "")
+                # metadata.project_idによるマッチング
+                if meta.get("type") == "project_config":
+                    pid = meta.get("project_id", "")
+                    if pid == project_id or pid == "default":
+                        logger.info(f"project_config found: pid={pid} query={query}")
+                        return {
+                            "project_id": pid,
+                            "langgraph": meta.get("langgraph", True),
+                            "auto_execute": meta.get("auto_execute", False),
+                            "safe_mode": meta.get("safe_mode", True),
+                            "allowed_commands": meta.get("allowed_commands", DEFAULT_ALLOWED),
+                        }
+                    # フォールバック: メモリテキストにproject_idが含まれる場合
+                    if project_id in mem_text and meta.get("type") == "project_config":
+                        logger.info(f"project_config found by text: {mem_text[:60]}")
+                        return {
+                            "project_id": project_id,
+                            "langgraph": meta.get("langgraph", True),
+                            "auto_execute": meta.get("auto_execute", False),
+                            "safe_mode": meta.get("safe_mode", True),
+                            "allowed_commands": meta.get("allowed_commands", DEFAULT_ALLOWED),
+                        }
     except Exception as e:
         logger.warning(f"get_project_config error: {e}")
+    logger.info(f"project_config not found for {project_id}, using default")
     return default
 
 
