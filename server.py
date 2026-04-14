@@ -5,7 +5,7 @@ SL-151/152/153: get_session_id() によるスレッド記憶継続対応
 SL-161: #ai-ops 即時自動トリガー強化（message イベント対応）
 """
 from __future__ import annotations
-import json, logging, os, subprocess, threading, uuid
+import json, logging, os, re, subprocess, threading, uuid
 from contextlib import asynccontextmanager
 from datetime import datetime
 from dotenv import load_dotenv
@@ -54,6 +54,81 @@ def get_session_id(event: dict) -> str:
         return f"slack-{uuid.uuid4()}"
 
 
+# ============================================================
+# SL-172: thread_id自動管理 (project-xxx パターン検出 + Mem0登録)
+# ============================================================
+
+MEM0_API_URL = os.getenv("MEM0_API_URL", "http://localhost:8888")
+MEM0_API_KEY = os.getenv("MEM0_API_KEY", "mem0-admin-cobot-2026")
+MEM0_USER_ID = os.getenv("MEM0_USER_ID", "ai-team")
+_mem0_headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {MEM0_API_KEY}",
+}
+
+def resolve_thread_id(text: str, ts: str) -> str:
+    """
+    Slackメッセージからthread_idを解決する。
+    - テキストに project-xxx パターンがあれば Mem0 で既存 thread_id を検索・再利用
+    - なければ新規登録して返す
+    - デフォルト: slack-ai-ops-{ts}
+    """
+    import httpx
+    match = re.search(r'project-[a-z0-9][a-z0-9-]*', text)
+    if not match:
+        return f"slack-ai-ops-{ts}"
+
+    project_name = match.group(0)
+    default_thread_id = f"slack-ai-ops-{ts}"
+
+    try:
+        with httpx.Client(timeout=10) as client:
+            # Mem0で既存thread_idを検索
+            resp = client.post(
+                f"{MEM0_API_URL}/search",
+                headers=_mem0_headers,
+                json={
+                    "query": f"thread_id {project_name}",
+                    "user_id": MEM0_USER_ID,
+                    "limit": 5,
+                },
+            )
+            resp.raise_for_status()
+            results = resp.json().get("results", [])
+
+            # type=thread_id かつ project_name が一致するエントリを探す
+            for r in results:
+                meta = r.get("metadata", {})
+                if meta.get("type") == "thread_id" and meta.get("project") == project_name:
+                    existing = meta.get("thread_id", "")
+                    if existing:
+                        logger.info(f"SL-172 resolve_thread_id: reuse {existing} for {project_name}")
+                        return existing
+
+            # 新規登録
+            new_thread_id = f"project-{project_name}-{ts}"
+            client.post(
+                f"{MEM0_API_URL}/memories",
+                headers=_mem0_headers,
+                json={
+                    "messages": [{"role": "assistant", "content": f"thread_id for {project_name}: {new_thread_id}"}],
+                    "user_id": MEM0_USER_ID,
+                    "metadata": {
+                        "type": "thread_id",
+                        "project": project_name,
+                        "thread_id": new_thread_id,
+                        "created_at": datetime.now().strftime("%Y-%m-%d"),
+                    },
+                },
+            )
+            logger.info(f"SL-172 resolve_thread_id: new {new_thread_id} for {project_name}")
+            return new_thread_id
+
+    except Exception as e:
+        logger.warning(f"SL-172 resolve_thread_id error: {e} — fallback to default")
+        return default_thread_id
+
+
 def run_langgraph(query, slack_channel="", slack_thread_ts="", session_id=None, agent_name=""):
     resolved_session_id = session_id if session_id else SESSION_ID
     initial_state: TeamState = {
@@ -68,7 +143,13 @@ def run_langgraph(query, slack_channel="", slack_thread_ts="", session_id=None, 
     }
     logger.info(f"Starting LangGraph: session_id={resolved_session_id}, agent_name={agent_name}, query={query[:80]}")
     final_state = None
-    for step in langgraph_app.stream(initial_state, {"recursion_limit": 15, "configurable": {"thread_id": resolved_session_id}}):
+    for step in langgraph_app.stream(
+        initial_state,
+        {
+            "recursion_limit": 15,
+            "configurable": {"thread_id": resolved_session_id},
+        }
+    ):
         for node_name, node_output in step.items():
             for msg in node_output.get("messages", []):
                 logger.info(f"[{node_name}] {(msg.content if hasattr(msg, 'content') else str(msg))[:200]}")
@@ -119,8 +200,8 @@ async def slack_events(request: Request):
         has_trigger = any(kw in text for kw in AI_OPS_TRIGGER_KEYWORDS)
 
         if is_ai_ops and is_new_msg and is_not_bot and has_trigger:
-            session_id = f"slack-ai-ops-{ts}"
-            logger.info(f"SL-161 ai-ops trigger: session_id={session_id}, text={text[:100]}")
+            session_id = resolve_thread_id(text, ts)
+            logger.info(f"SL-161/172 ai-ops trigger: session_id={session_id}, text={text[:100]}")
 
             # 受信確認を即座に返信
             try:
@@ -142,8 +223,8 @@ async def slack_events(request: Request):
 
                     # a. Mem0に記録
                     try:
-                        from tools_mem0 import mem0_write
-                        mem0_write(
+                        from tools_mem0 import write_to_mem0
+                        write_to_mem0(
                             content=f"ai-ops auto-trigger: {text[:200]} → {final_msg[:200]}",
                             user_id="ai-team",
                             metadata={"type": "ai_ops_trigger", "session_id": session_id,
