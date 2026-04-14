@@ -214,12 +214,34 @@ async def slack_events(request: Request):
 
             def _run_ai_ops_trigger():
                 try:
-                    result = run_langgraph(text, channel, ts, session_id=session_id, agent_name="ai-ops-trigger")
-                    final_msg = ""
-                    if result and "messages" in result:
-                        for msg in result["messages"]:
-                            content = msg.content if hasattr(msg, "content") else str(msg)
-                            final_msg += content + "\n"
+                    # SL-172 v6: Mode A/B/C/D 実行制御
+                    from executor import get_project_config, resolve_execution_mode, execute_instruction
+                    proj_match = re.search(r'project-[a-z0-9][a-z0-9-]*', text)
+                    project_id = proj_match.group(0) if proj_match else "default"
+                    config = get_project_config(project_id)
+                    mode = resolve_execution_mode(config)
+                    logger.info(f"Execution mode={mode}, project={project_id}")
+
+                    lg_msg = ""
+                    exec_result = ""
+
+                    if mode in ("A", "B"):
+                        result = run_langgraph(text, channel, ts, session_id=session_id, agent_name="ai-ops-trigger")
+                        if result and "messages" in result:
+                            for msg in result["messages"]:
+                                content = msg.content if hasattr(msg, "content") else str(msg)
+                                lg_msg += content + "\n"
+
+                    if mode in ("B", "C"):
+                        exec_result = execute_instruction(text, config)
+
+                    if mode == "D":
+                        exec_result = "受信しました（半自動モード: 手動実行待ち）"
+
+                    parts = []
+                    if lg_msg: parts.append(f"LangGraph:\n{lg_msg.strip()}")
+                    if exec_result: parts.append(f"実行結果:\n{exec_result}")
+                    final_msg = "\n\n".join(parts) or "(no output)"
 
                     # a. Mem0に記録
                     try:
@@ -238,6 +260,7 @@ async def slack_events(request: Request):
                         progress_path = os.path.join(os.path.dirname(__file__), "progress.md")
                         entry = (f"\n### auto-trigger {datetime.now().strftime('%Y-%m-%d %H:%M')} JST\n"
                                  f"- session_id: {session_id}\n"
+                                 f"- mode: {mode}, project: {project_id}\n"
                                  f"- query: {text[:100]}\n"
                                  f"- result: {final_msg[:150]}\n")
                         with open(progress_path, "a") as f:
