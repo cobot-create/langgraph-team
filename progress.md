@@ -214,3 +214,11 @@ _① server.py トリガー条件確認_
 - **SL-178**: AI-Opsトリガー条件設定完了
 - **SL-160/161**: AI-ops自動トリガー本格運用開始
 - **executor.py**: 検索精度改善実装完了
+
+### auto-trigger 2026-04-15 09:01 JST
+- session_id: project-project-test-1776211287.393589
+- mode: C, project: project-test
+- query: Mode C E2E テスト結果 + バグ修正 (SL-178)
+_根本原因_: Slackが :dart: を `:dart:` (テキスト) として送信するため `has_trigger=Fals
+- result: 実行結果:
+コマンド生成エラー: Expecting value: line 1 column 1 (char 0)
