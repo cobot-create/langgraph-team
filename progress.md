@@ -1858,3 +1858,13 @@ o
 [Extract lines 187-220 from mission_engine.py, print separator, then extract lines 273-276 from server.py]
 
 [OK] `sed -n '187,220p' /home/ubuntu
+
+### auto-trigger 2026-04-16 01:23 JST
+- session_id: project-project-test-1776270196.002409
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '200,220p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 200-220 of mission_engine.py]
+
+[OK] `sed -n '200,220p' /home/ubuntu/langgraph-team/mission_engine.py`
+raise RuntimeError(f"SSH fa
