@@ -700,3 +700,12 @@ text=f"⚡
 
 [OK] `sed -n '80,158p' ~/langgraph-team/executor.py`
 return de
+
+### auto-trigger 2026-04-15 13:40 JST
+- session_id: project-project-test-1776227988.168219
+- mode: C, project: project-test
+- query: 【指令】project-test grep -n "def execute_instruction|subprocess|json.loads|llm|claude|anthropic|chat|in
+- result: 実行結果:
+[Search for specific function definitions and keywords in executor.py file, showing line numbers, limited to first 30 matches]
+
+[OK] `grep -n "d
