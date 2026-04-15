@@ -1769,3 +1769,12 @@ def _hc(mission_id: st
 [OK] `sed -n '265,280p' /home/ubuntu/langgraph-team/server.py`
 if "langgraph-on" in text:
            
+
+### auto-trigger 2026-04-16 01:18 JST
+- session_id: project-project-test-1776269875.491869
+- mode: C, project: project-test
+- query: 【指令】project-test grep -n "_hw|_hc|_he|_result_handler|finally" /home/ubuntu/langgraph-team/mission_e
+- result: 実行結果:
+[Search for lines containing _hw, _hc, _he, _result_handler, or finally in mission_engine.py with line numbers]
+
+[WARN] `grep -n "_hw|_hc|_he|_r
