@@ -222,3 +222,14 @@ _① server.py トリガー条件確認_
 _根本原因_: Slackが :dart: を `:dart:` (テキスト) として送信するため `has_trigger=Fals
 - result: 実行結果:
 コマンド生成エラー: Expecting value: line 1 column 1 (char 0)
+
+### auto-trigger 2026-04-15 09:15 JST
+- session_id: project-project-test-1776212144.539919
+- mode: C, project: project-test
+- query: デバッグ報告 + JSON parse修正完了 (SL-178)
+_① ジャーナル確認結果_
+• `project_config found: pid=project-test` → Mem0検索 :
+- result: 実行結果:
+[SL-178デバッグ報告確認: JSONパース修正(マークダウンフェンス自動除去)完了。Mem0検索OK、Mode C判定OK、allowed_commands確認OK。systemctl restart済み、GitHub push完了(0bc47b0)。再テスト準備完了。]
+
+[OK
