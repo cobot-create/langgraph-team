@@ -1444,3 +1444,13 @@ def mission_add(text
 _executing = True
 
     mi
+
+### auto-trigger 2026-04-15 22:59 JST
+- session_id: project-project-test-1776261560.714429
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '250,320p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 250-320 from mission_engine.py]
+
+[OK] `sed -n '250,320p' /home/ubuntu/langgraph-team/mission_engine.py`
+_slack_client and use_ch 
