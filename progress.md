@@ -667,3 +667,12 @@ has_trigger
 
 [OK] `sed -n '218,310p' ~/langgraph-team/server.py`
 text=f"⚡
+
+### auto-trigger 2026-04-15 13:31 JST
+- session_id: project-project-test-1776227486.498169
+- mode: C, project: project-test
+- query: 【指令】project-test grep -n "slack_client|WebClient|SLACK_BOT|_run_ai_ops|def _run|autoloop|BOT_TOKEN" 
+- result: 実行結果:
+[Search for specific Slack and bot-related patterns in server.py file with line numbers]
+
+[OK] `grep -n 'slack_client\|WebClient\|SLACK_BOT\|_ru
