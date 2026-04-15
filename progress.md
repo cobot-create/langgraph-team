@@ -1933,3 +1933,12 @@ f=
 [Restart langgraph-team service, wait 2 seconds, then display first 5 lines of service status]
 
 [WARN] `systemctl restart langgraph-team && slee
+
+### auto-trigger 2026-04-16 01:27 JST
+- session_id: project-project-test-1776270419.489669
+- mode: C, project: project-test
+- query: 【指令】project-test kill -HUP $(pgrep -f "langgraph-team/server.py") &amp;&amp; sleep 2 &amp;&amp; pgre
+- result: 実行結果:
+[Send HUP signal to langgraph-team/server.py process, wait 2 seconds, then check if process still exists]
+
+[BLOCKED by safe_mode]: kill -HUP $(p
