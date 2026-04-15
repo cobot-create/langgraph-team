@@ -683,3 +683,10 @@ text=f"⚡
 - query: 【指令】project-test echo 'IiIiYXV0b2xvb3AucHkgLSBMYW5nR3JhcGggT04vT0ZGIGF1dG9ub21vdXMgY3ljbGUgKFNMLTE3O
 - result: 実行結果:
 コマンド生成エラー: Unterminated string starting at: line 3 column 5 (char 22)
+
+### auto-trigger 2026-04-15 13:36 JST
+- session_id: project-project-test-1776227790.111519
+- mode: C, project: project-test
+- query: 【指令】project-test echo 'aW1wb3J0IGpzb24sbG9nZ2luZyxvcyx0aHJlYWRpbmcKaW1wb3J0IHRpbWUgYXMgX3QKbG9nZ2VyP
+- result: 実行結果:
+コマンド生成エラー: Unterminated string starting at: line 3 column 5 (char 22)
