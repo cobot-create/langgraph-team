@@ -1432,3 +1432,15 @@ def mission_add(text
   {
     "id": "m-193fe82a",
     "text": "VPS(/h
+
+### auto-trigger 2026-04-15 22:59 JST
+- session_id: project-project-test-1776261556.343189
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '175,250p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 175-250 from mission_engine.py]
+
+[OK] `sed -n '175,250p' /home/ubuntu/langgraph-team/mission_engine.py`
+_executing = True
+
+    mi
