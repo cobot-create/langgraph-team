@@ -1489,3 +1489,10 @@ import autoloop
 
 [OK] `sed -n '190,260p' /home/ubuntu/langgraph-team/mission_engine.py`
 ["ssh", "-o", "StrictH
+
+### auto-trigger 2026-04-15 23:03 JST
+- session_id: project-project-test-1776261781.163429
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '205,255p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+コマンド生成エラー: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Ca5gVNBpeK1
