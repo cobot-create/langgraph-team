@@ -233,3 +233,13 @@ _① ジャーナル確認結果_
 [SL-178デバッグ報告確認: JSONパース修正(マークダウンフェンス自動除去)完了。Mem0検索OK、Mode C判定OK、allowed_commands確認OK。systemctl restart済み、GitHub push完了(0bc47b0)。再テスト準備完了。]
 
 [OK
+
+### auto-trigger 2026-04-15 09:24 JST
+- session_id: project-project-test-1776212663.734979
+- mode: C, project: project-test
+- query: 【指令】project-test echo "疎通テスト SL-178" *使用して送信されました* Claude
+- result: 実行結果:
+[Echo command to output the test message with Japanese characters]
+
+[OK] `echo '疎通テスト SL-178'`
+疎通テスト SL-178
