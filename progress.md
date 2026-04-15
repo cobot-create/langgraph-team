@@ -1778,3 +1778,12 @@ if "langgraph-on" in text:
 [Search for lines containing _hw, _hc, _he, _result_handler, or finally in mission_engine.py with line numbers]
 
 [WARN] `grep -n "_hw|_hc|_he|_r
+
+### auto-trigger 2026-04-16 01:18 JST
+- session_id: project-project-test-1776269898.839139
+- mode: C, project: project-test
+- query: 【指令】project-test grep -nE "_hw(|_hc(|_he(|finally:" /home/ubuntu/langgraph-team/mission_engine.py *使
+- result: 実行結果:
+[Search for lines containing _hw(, _hc(, _he(, or finally: in the mission_engine.py file with line numbers]
+
+[WARN] `grep -nE "_hw(|_hc(|_he(|fi
