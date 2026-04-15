@@ -138,10 +138,10 @@ def execute_instruction(instruction: str, config: dict) -> str:
             continue
         try:
             r = subprocess.run(
-                cmd, shell=True, capture_output=True, text=True,
+                cmd, shell=True, capture_output=True,
                 timeout=30, cwd=os.path.expanduser("~/langgraph-team"),
             )
-            out = (r.stdout.strip() or r.stderr.strip() or "(no output)")[:500]
+            out = (r.stdout.decode("utf-8", errors="replace").strip() or r.stderr.decode("utf-8", errors="replace").strip() or "(no output)")[:500]
             status = "OK" if r.returncode == 0 else "WARN"
             lines.append(f"[{status}] `{cmd}`\n{out}")
         except subprocess.TimeoutExpired:

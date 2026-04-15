@@ -245,6 +245,18 @@ async def slack_events(request: Request):
 
                     if mode == "D":
                         exec_result = "受信しました（半自動モード: 手動実行待ち）"
+                    if mode == "E":
+                        # Mode E: coro委譲 VPS→Tailscale SSH→Claude Code@coro
+                        import subprocess as _sp
+                        _safe = text.replace(chr(39), chr(39)+chr(92)+chr(39)+chr(39))
+                        _r = _sp.run(
+                            ["ssh","-o","StrictHostKeyChecking=no","-o","ConnectTimeout=30",
+                             "-o","IdentitiesOnly=yes","-i",os.path.expanduser("~/.ssh/id_ed25519"),
+                             "manag@100.116.84.60",
+                             f"claude -p '{_safe}' 2>&1 | tail -80"],
+                            capture_output=True, timeout=120
+                        )
+                        exec_result = (_r.stdout.decode("utf-8",errors="replace").strip() or _r.stderr.decode("utf-8",errors="replace").strip() or "(no output from coro)")
 
                     parts = []
                     if lg_msg: parts.append(f"LangGraph:\n{lg_msg.strip()}")
