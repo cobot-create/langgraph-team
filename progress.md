@@ -1657,3 +1657,12 @@ def mission_skip(missi
 [Search for function definitions and variable names related to execution in the mission_engine.py file]
 
 [WARN] `grep -n "def execute_next|def _
+
+### auto-trigger 2026-04-16 01:10 JST
+- session_id: project-project-test-1776269409.547149
+- mode: C, project: project-test
+- query: 【指令】project-test grep -nE "def execute_next|_executing" /home/ubuntu/langgraph-team/mission_engine.p
+- result: 実行結果:
+[Search for 'def execute_next' or '_executing' patterns in mission_engine.py file with line numbers]
+
+[OK] `grep -nE "def execute_next|_executin
