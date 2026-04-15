@@ -1758,3 +1758,14 @@ def _hc(mission_id: st
 [Search for specific patterns in server.py file including mission_add, Japanese text, suffix, and strip method calls]
 
 [OK] `grep -nE "mission_a
+
+### auto-trigger 2026-04-16 01:16 JST
+- session_id: project-project-test-1776269798.359869
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '265,280p' /home/ubuntu/langgraph-team/server.py *使用して送信されました* Claude
+- result: 実行結果:
+[Display lines 265-280 of server.py file]
+
+[OK] `sed -n '265,280p' /home/ubuntu/langgraph-team/server.py`
+if "langgraph-on" in text:
+           
