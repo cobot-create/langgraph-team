@@ -1648,3 +1648,12 @@ _save(miss
 
 [OK] `sed -n '140,230p' /home/ubuntu/langgraph-team/mission_engine.py`
 def mission_skip(missi
+
+### auto-trigger 2026-04-16 01:09 JST
+- session_id: project-project-test-1776269385.964189
+- mode: C, project: project-test
+- query: 【指令】project-test grep -n "def execute_next|def _execute|_executing" /home/ubuntu/langgraph-team/miss
+- result: 実行結果:
+[Search for function definitions and variable names related to execution in the mission_engine.py file]
+
+[WARN] `grep -n "def execute_next|def _
