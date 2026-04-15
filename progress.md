@@ -312,3 +312,10 @@ active
 - query: 【指令】project-test ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 <mailto:manag@100.116.84.60> "
 - result: 実行結果:
 [SSH connection test to remote host 100.116.84.60 with user manag, disabling host key checking and setting 10 second timeout, echoing confirmati
+
+### auto-trigger 2026-04-15 09:50 JST
+- session_id: project-project-test-1776214206.467769
+- mode: C, project: project-test
+- query: 【指令】project-test ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -o IdentitiesOnly=yes -i ~/.ss
+- result: 実行結果:
+[SSH connection test to remote host with specified options: skip host key verification, set 10s timeout, use only specified SSH key, then execut
