@@ -1666,3 +1666,13 @@ def mission_skip(missi
 [Search for 'def execute_next' or '_executing' patterns in mission_engine.py file with line numbers]
 
 [OK] `grep -nE "def execute_next|_executin
+
+### auto-trigger 2026-04-16 01:10 JST
+- session_id: project-project-test-1776269446.267489
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '155,215p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 155-215 of the mission_engine.py file]
+
+[OK] `sed -n '155,215p' /home/ubuntu/langgraph-team/mission_engine.py`
+def execute_next(s
