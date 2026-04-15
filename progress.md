@@ -780,3 +780,12 @@ def exe
 [Compile Python file for syntax check and report result]
 
 [OK] `python3 -m py_compile ~/langgraph-team/server.py && echo "SYNTAX_OK" || echo "SY
+
+### auto-trigger 2026-04-15 14:00 JST
+- session_id: project-project-test-1776229214.862549
+- mode: C, project: project-test
+- query: 【指令】project-test sed -i "/# SL-172 v6/i\                if "langgraph-on" in text:\n                
+- result: 実行結果:
+[Insert langgraph command handlers before SL-172 v6 marker in server.py, verify syntax, and confirm completion]
+
+[OK] `sed -i "/# SL-172 v6/i\  
