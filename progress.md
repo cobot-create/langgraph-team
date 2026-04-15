@@ -1638,3 +1638,13 @@ _save(miss
 [OK] `sed -n '80,100p' /home/ubuntu/langgraph-team/mission_engine.py`
 "channel": ch,
         "
+
+### auto-trigger 2026-04-16 01:09 JST
+- session_id: project-project-test-1776269335.568409
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '140,230p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 140-230 of mission_engine.py file]
+
+[OK] `sed -n '140,230p' /home/ubuntu/langgraph-team/mission_engine.py`
+def mission_skip(missi
