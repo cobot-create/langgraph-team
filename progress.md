@@ -331,3 +331,13 @@ active
 746 /home/ubuntu/.ssh/id_rsa.pub
 
 [BLOCKED by safe_m
+
+### auto-trigger 2026-04-15 09:52 JST
+- session_id: project-project-test-1776214318.132409
+- mode: C, project: project-test
+- query: 【指令】project-test ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N "" -q 2&gt;/dev/null; cat ~/.ssh/id_e
+- result: 実行結果:
+[Generate ED25519 SSH key pair and display public key]
+
+[OK] `cat ~/.ssh/id_ed25519.pub`
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ36Ui4T7AOE5lNlLxO
