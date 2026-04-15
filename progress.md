@@ -1794,3 +1794,11 @@ if "langgraph-on" in text:
 - query: 【指令】project-test grep -nF "_hw(" /home/ubuntu/langgraph-team/mission_engine.py &amp;&amp; grep -nF "
 - result: 実行結果:
 [Search for four specific patterns in mission_engine.py: _hw( function calls, _hc( function calls, _he( function calls, and finally: statements]
+
+### auto-trigger 2026-04-16 01:19 JST
+- session_id: project-project-coro-1776269958.680999
+- mode: E, project: project-coro
+- query: 【指令】project-coro SSH経由でVPS上の /home/ubuntu/langgraph-team/mission_engine.py を修正してください。
+修正内容（execute_n
+- result: 実行結果:
+Failed to authenticate. API Error: 401 {"type":"error","error":{"type":"authentication_error","message":"Invalid authentication credentials"},"r
