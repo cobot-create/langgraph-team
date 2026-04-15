@@ -1399,3 +1399,13 @@ mission_engine.py - La
 [Search for function definitions, consecutive, failed_mission, and retry_count patterns in mission_engine.py]
 
 [OK] `grep -En "def [a-z_]+|conse
+
+### auto-trigger 2026-04-15 22:58 JST
+- session_id: project-project-test-1776261508.539699
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '155,370p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Extract lines 155 to 370 from mission_engine.py file]
+
+[OK] `sed -n '155,370p' /home/ubuntu/langgraph-team/mission_engine.py`
+def execute_next(
