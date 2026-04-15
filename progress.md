@@ -367,3 +367,12 @@ ea8da31
 - query: 【指令】project-test grep -n "mode.*E|Mode E|resolve_execution" ~/langgraph-team/server.py ~/langgraph-t
 - result: 実行結果:
 [Search for 'mode.*E', 'Mode E', or 'resolve_execution' patterns in server.py and executor.py files, showing line numbers, limited to first 20 m
+
+### auto-trigger 2026-04-15 09:58 JST
+- session_id: project-project-test-1776214717.121339
+- mode: C, project: project-test
+- query: 【指令】project-test grep -A 10 "def resolve_execution_mode" ~/langgraph-team/executor.py *使用して送信されました* 
+- result: 実行結果:
+[Search for the resolve_execution_mode function definition and display it along with the next 10 lines]
+
+[OK] `grep -A 10 'def resolve_execution
