@@ -1849,3 +1849,12 @@ o
 [Applies a regex pattern patch to server.py that removes markdown bold/italic markers and newlines from extracted text]
 
 [OK] `python3 -c "impor
+
+### auto-trigger 2026-04-16 01:22 JST
+- session_id: project-project-test-1776270161.491329
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '187,220p' /home/ubuntu/langgraph-team/mission_engine.py &amp;&amp; echo "--
+- result: 実行結果:
+[Extract lines 187-220 from mission_engine.py, print separator, then extract lines 273-276 from server.py]
+
+[OK] `sed -n '187,220p' /home/ubuntu
