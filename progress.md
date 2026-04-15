@@ -1479,3 +1479,13 @@ import autoloop
 - query: 【指令】project-test grep -n "_add_report_mission|_auto_off|_executing\s*=|on_autoloop_on|resume_from_th
 - result: 実行結果:
 コマンド生成エラー: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Ca5gKDzBCmW
+
+### auto-trigger 2026-04-15 23:02 JST
+- session_id: project-project-test-1776261746.613769
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '190,260p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 190-260 of mission_engine.py file]
+
+[OK] `sed -n '190,260p' /home/ubuntu/langgraph-team/mission_engine.py`
+["ssh", "-o", "StrictH
