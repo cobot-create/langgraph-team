@@ -1409,3 +1409,13 @@ mission_engine.py - La
 
 [OK] `sed -n '155,370p' /home/ubuntu/langgraph-team/mission_engine.py`
 def execute_next(
+
+### auto-trigger 2026-04-15 22:58 JST
+- session_id: project-project-test-1776261516.247559
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '63,154p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claude
+- result: 実行結果:
+[Display lines 63-154 of the mission_engine.py file]
+
+[OK] `sed -n '63,154p' /home/ubuntu/langgraph-team/mission_engine.py`
+def mission_add(text
