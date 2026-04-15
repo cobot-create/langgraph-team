@@ -341,3 +341,12 @@ active
 
 [OK] `cat ~/.ssh/id_ed25519.pub`
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ36Ui4T7AOE5lNlLxO
+
+### auto-trigger 2026-04-15 09:53 JST
+- session_id: project-project-test-1776214400.986679
+- mode: C, project: project-test
+- query: 【指令】project-test ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -o IdentitiesOnly=yes -i ~/.ss
+- result: 実行結果:
+[SSH connection to remote host with key authentication to verify connectivity and check Claude version]
+
+[ERROR] `ssh -o StrictHostKeyChecking=n
