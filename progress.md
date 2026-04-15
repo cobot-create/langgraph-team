@@ -1465,3 +1465,10 @@ _slack_client and use_ch
 [OK] `sed -n '320,370p' /home/ubuntu/langgraph-team/mission_engine.py`
 import autoloop
     st
+
+### auto-trigger 2026-04-15 23:00 JST
+- session_id: project-project-test-1776261634.033509
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '190,260p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+コマンド生成エラー: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Ca5gJaQycKi
