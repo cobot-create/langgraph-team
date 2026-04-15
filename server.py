@@ -24,7 +24,7 @@ AI_OPS_CHANNEL_ID = os.getenv("SLACK_CHANNEL_AI_OPS_ID", "C0AL5DRAY15")
 AI_OPS_CHANNEL = os.getenv("SLACK_CHANNEL_AI_OPS", "ai-ops")
 
 # SL-161: 自動トリガーフィルタキーワード
-AI_OPS_TRIGGER_KEYWORDS = ["🎯", "【指令】", "【instruction】"]
+AI_OPS_TRIGGER_KEYWORDS = ["🎯", ":dart:", "【指令】", "【instruction】"]
 # Bot自身のユーザーIDを環境変数で管理（自己応答ループ防止）
 BOT_USER_ID = os.getenv("SLACK_BOT_USER_ID", "")
 slack_client = None
@@ -198,6 +198,14 @@ async def slack_events(request: Request):
         is_new_msg = not subtype  # subtypeなし = 新規投稿
         is_not_bot = user != BOT_USER_ID and not event.get("bot_id")
         has_trigger = any(kw in text for kw in AI_OPS_TRIGGER_KEYWORDS)
+
+        # DEBUG: 条件診断ログ (SL-172)
+        logger.info(
+            f"DEBUG trigger check: channel={channel}({is_ai_ops}) "
+            f"subtype={subtype!r}({is_new_msg}) "
+            f"user={user} bot_id={event.get('bot_id')}({is_not_bot}) "
+            f"has_trigger={has_trigger} text_start={text[:40]!r}"
+        )
 
         if is_ai_ops and is_new_msg and is_not_bot and has_trigger:
             session_id = resolve_thread_id(text, ts)
