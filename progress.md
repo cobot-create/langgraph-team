@@ -1698,3 +1698,13 @@ _executing = True
 
 [OK] `sed -n '193,220p' /home/ubuntu/langgraph-team/mission_engine.py`
 capture_output=True, time
+
+### auto-trigger 2026-04-16 01:12 JST
+- session_id: project-project-test-1776269515.516739
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '206,230p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 206 to 230 of mission_engine.py]
+
+[OK] `sed -n '206,230p' /home/ubuntu/langgraph-team/mission_engine.py`
+except subprocess.Timeou
