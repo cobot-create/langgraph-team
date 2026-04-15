@@ -1676,3 +1676,15 @@ def mission_skip(missi
 
 [OK] `sed -n '155,215p' /home/ubuntu/langgraph-team/mission_engine.py`
 def execute_next(s
+
+### auto-trigger 2026-04-16 01:11 JST
+- session_id: project-project-test-1776269470.050399
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '175,220p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+[Display lines 175-220 of mission_engine.py file]
+
+[OK] `sed -n '175,220p' /home/ubuntu/langgraph-team/mission_engine.py`
+_executing = True
+
+   
