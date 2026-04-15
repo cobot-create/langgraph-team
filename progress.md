@@ -1617,3 +1617,13 @@ def mission_add(text: str,
 [OK] `cat -n /home/ubuntu/langgraph-team/mission_engine.py`
 1	"""
      2	mis
+
+### auto-trigger 2026-04-16 01:08 JST
+- session_id: project-project-test-1776269272.241499
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '60,120p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claude
+- result: 実行結果:
+[Extract and display lines 60-120 from mission_engine.py file]
+
+[OK] `sed -n '60,120p' /home/ubuntu/langgraph-team/mission_engine.py`
+_save(miss
