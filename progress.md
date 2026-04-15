@@ -805,3 +805,12 @@ def exe
 - query: 【指令】project-test sed -i "/^                if "langgraph-on" in text:/,/^                    _alstat
 - result: 実行結果:
 [Remove existing langgraph condition block, insert new langgraph-on/off/status handlers before SL-172 v6 comment, verify Python syntax, and conf
+
+### auto-trigger 2026-04-15 14:02 JST
+- session_id: project-project-test-1776229333.161939
+- mode: C, project: project-test
+- query: 【指令】project-test sed -i "/^async def lifespan/a\    if os.path.exists(_ALF):\n        global _alr,_a
+- result: 実行結果:
+[Insert autoloop initialization code into lifespan function, compile Python for syntax check, and confirm completion]
+
+[OK] `sed -i "/^async def
