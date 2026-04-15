@@ -798,3 +798,10 @@ def exe
 [Display lines 245-265 of server.py with visible whitespace characters, showing first 25 lines]
 
 [OK] `sed -n '245,265p' ~/langgraph-team/server
+
+### auto-trigger 2026-04-15 14:01 JST
+- session_id: project-project-test-1776229296.240399
+- mode: C, project: project-test
+- query: 【指令】project-test sed -i "/^                if "langgraph-on" in text:/,/^                    _alstat
+- result: 実行結果:
+[Remove existing langgraph condition block, insert new langgraph-on/off/status handlers before SL-172 v6 comment, verify Python syntax, and conf
