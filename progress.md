@@ -319,3 +319,15 @@ active
 - query: 【指令】project-test ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -o IdentitiesOnly=yes -i ~/.ss
 - result: 実行結果:
 [SSH connection test to remote host with specified options: skip host key verification, set 10s timeout, use only specified SSH key, then execut
+
+### auto-trigger 2026-04-15 09:51 JST
+- session_id: project-project-test-1776214279.080639
+- mode: C, project: project-test
+- query: 【指令】project-test ssh-keygen -l -f ~/.ssh/id_rsa.pub &amp;&amp; wc -c ~/.ssh/id_rsa.pub *使用して送信されました*
+- result: 実行結果:
+[Display SSH public key fingerprint and file size in bytes]
+
+[OK] `wc -c ~/.ssh/id_rsa.pub`
+746 /home/ubuntu/.ssh/id_rsa.pub
+
+[BLOCKED by safe_m
