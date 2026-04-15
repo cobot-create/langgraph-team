@@ -932,3 +932,12 @@ LangGraph AI Te
 - query: 【指令】project-test sed -n '1,50p' ~/langgraph-team/server.py &amp;&amp; echo "===" &amp;&amp; grep -n 
 - result: 実行結果:
 [Display first 50 lines of server.py, then search for specific pattern matches (alon, aloff, alstatus, auto_loop, loop) with line numbers, limit
+
+### auto-trigger 2026-04-15 17:58 JST
+- session_id: project-project-test-1776243471.432629
+- mode: C, project: project-test
+- query: 【指令】project-test python3 -c "
+import base64,os
+b='IiIiYXV0b2xvb3AucHkgLSBMYW5nR3JhcGggT04vT0ZGIGF1dG
+- result: 実行結果:
+コマンド生成エラー: Extra data: line 5 column 1 (char 373)
