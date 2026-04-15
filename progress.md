@@ -1381,3 +1381,12 @@ mission_engine.py - LangGraph
 [OK] `sed -n '1,100p' /home/ubuntu/langgraph-team/mission_engine.py`
 """
 mission_engine.py - La
+
+### auto-trigger 2026-04-15 22:57 JST
+- session_id: project-project-test-1776261462.938299
+- mode: C, project: project-test
+- query: 【指令】project-test grep -n "def _hc|def _he|def _hw|def execute_next|def on_autoloop_on|def mission_ad
+- result: 実行結果:
+[Search for specific function and variable definitions in mission_engine.py and count total lines in the file]
+
+[WARN] `grep -n "def _hc|def _he
