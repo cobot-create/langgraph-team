@@ -253,12 +253,13 @@ async def slack_events(request: Request):
 
                     # a. Mem0に記録
                     try:
-                        from tools_mem0 import write_to_mem0
-                        write_to_mem0(
+                        from tools_mem0 import mem0_write
+                        mem0_write(
                             content=f"ai-ops auto-trigger: {text[:200]} → {final_msg[:200]}",
+                            metadata_type="ai_ops_trigger",
+                            session_id=session_id,
+                            date=datetime.now().strftime("%Y-%m-%d"),
                             user_id="ai-team",
-                            metadata={"type": "ai_ops_trigger", "session_id": session_id,
-                                      "date": datetime.now().strftime("%Y-%m-%d")}
                         )
                     except Exception as e:
                         logger.error(f"Mem0 write error: {e}")
