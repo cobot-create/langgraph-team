@@ -575,3 +575,12 @@ f"claude -p '{_safe}'
 - query: 【指令】project-coro 現在のVPS（133.167.77.17）のlanggraph-teamサービスの稼働状態を確認して報告してください。SSHコマンド: ssh <mailto:ubu
 - result: 実行結果:
 �w�肳�ꂽ�t�@�C����������܂���B
+
+### auto-trigger 2026-04-15 10:34 JST
+- session_id: project-project-test-1776216862.630819
+- mode: C, project: project-test
+- query: 【指令】project-test ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -o IdentitiesOnly=yes -i ~/.ss
+- result: 実行結果:
+[SSH connection to remote host with Ed25519 key authentication, executing echo command to verify connectivity]
+
+[OK] `ssh -o StrictHostKeyChecki
