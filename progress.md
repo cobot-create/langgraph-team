@@ -1868,3 +1868,12 @@ o
 
 [OK] `sed -n '200,220p' /home/ubuntu/langgraph-team/mission_engine.py`
 raise RuntimeError(f"SSH fa
+
+### auto-trigger 2026-04-16 01:23 JST
+- session_id: project-project-test-1776270225.939279
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '212,220p' /home/ubuntu/langgraph-team/mission_engine.py &amp;&amp; echo "==
+- result: 実行結果:
+[Extract lines 212-220 from mission_engine.py, print separator, and extract lines 273-277 from server.py]
+
+[OK] `sed -n '212,220p' /home/ubuntu/
