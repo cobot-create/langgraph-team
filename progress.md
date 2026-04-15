@@ -1503,3 +1503,10 @@ import autoloop
 - query: 【指令】project-test grep -n "_executing = False|_executing=False|finally" /home/ubuntu/langgraph-team/m
 - result: 実行結果:
 コマンド生成エラー: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Ca5gVwzK2xB
+
+### auto-trigger 2026-04-15 23:06 JST
+- session_id: project-project-test-1776261967.134299
+- mode: C, project: project-test
+- query: 【指令】project-test sed -n '205,255p' /home/ubuntu/langgraph-team/mission_engine.py *使用して送信されました* Claud
+- result: 実行結果:
+コマンド生成エラー: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Ca5gjDjDU6H
