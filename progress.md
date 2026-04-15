@@ -1390,3 +1390,12 @@ mission_engine.py - La
 [Search for specific function and variable definitions in mission_engine.py and count total lines in the file]
 
 [WARN] `grep -n "def _hc|def _he
+
+### auto-trigger 2026-04-15 22:58 JST
+- session_id: project-project-test-1776261483.567449
+- mode: C, project: project-test
+- query: 【指令】project-test grep -En "def [a-z_]+|consecutive|failed_mission|retry_count" /home/ubuntu/langgrap
+- result: 実行結果:
+[Search for function definitions, consecutive, failed_mission, and retry_count patterns in mission_engine.py]
+
+[OK] `grep -En "def [a-z_]+|conse
