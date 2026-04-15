@@ -116,7 +116,13 @@ def execute_instruction(instruction: str, config: dict) -> str:
             system=system,
             messages=[{"role": "user", "content": instruction}],
         )
-        parsed = json.loads(resp.content[0].text.strip())
+        raw = resp.content[0].text.strip()
+        # markdownコードフェンス除去
+        fence = chr(96) * 3
+        if raw.startswith(fence):
+            parts = raw.split(chr(10))
+            raw = chr(10).join(parts[1:-1]) if parts[-1].strip() == fence else chr(10).join(parts[1:])
+        parsed = json.loads(raw.strip())
         commands = parsed.get("commands", [])
         description = parsed.get("description", "")
     except Exception as e:
