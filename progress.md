@@ -278,3 +278,12 @@ _原因
 active
 
 
+
+### auto-trigger 2026-04-15 09:40 JST
+- session_id: project-project-test-1776213594.511319
+- mode: C, project: project-test
+- query: 【指令】project-test tailscale status 2&gt;/dev/null | head -20 || echo "tailscale not available on VPS"
+- result: 実行結果:
+[Check Tailscale VPN status, display first 20 lines, or show message if Tailscale is unavailable]
+
+[BLOCKED by safe_mode]: tailscale status 2>/d
