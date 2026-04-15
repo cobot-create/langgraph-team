@@ -1076,3 +1076,10 @@ File "/home/ubuntu/langgraph-team/se
 
 [OK] `systemctl is-active langgraph-team`
 active
+
+### auto-trigger 2026-04-15 18:39 JST
+- session_id: project-project-coro-1776245970.088119
+- mode: E, project: project-coro
+- query: 【指令】project-coro ssh <mailto:ubuntu@133.167.77.17> sudo systemctl restart langgraph-team *使用して送信されまし
+- result: 実行結果:
+�w�肳�ꂽ�t�@�C����������܂���B
