@@ -2123,3 +2123,17 @@ _SL-185: auto-trigger メッセージ転送修正_
 auto-triggerが【指令】を検知しても、coro側に指令内容が正しく渡っていない。serve
 - result: 実行結果:
 (no output from coro)
+
+### auto-trigger 2026-04-16 14:42 JST
+- session_id: project-project-coro-1776318127.451159
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+_auto-trigger E2Eテスト_
+VPS（133.167.77.17）にSSHして以下を実行し、結果をこのスレッドに報告してください。
+`echo "aut
+- result: 実行結果:
+【指令】を受け取りました。ただし "project-coro" の後に具体的なタスクが記載されていないようです。
+
+指示の内容を教えていただけますか？例えば：
+- Slackの #ai-ops に投稿された指令の内容
+- 実行すべき具体的なタスク
