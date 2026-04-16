@@ -2785,3 +2785,20 @@ curl -s -X POST http://localhost:8888/search -H "Cont
 
 - **指令受信確認**: 3行の指示すべて完全に受信できています
 - **grep結果**: `session_handoff` / `domain.expansion` / `CLAUDE_PROMPT` / `
+
+### auto-trigger 2026-04-17 00:09 JST
+- session_id: slack-ai-ops-1776352158.852139
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+server.py の Mode E 処理（L410〜435付近）に Mem0コンテキスト注入を追加してください。
+現状: claude -p '{_safe}' に
+- result: 実行結果:
+メモリファイルが存在しません。【指令】project-coro の内容が不完全です。
+
+**指令の詳細をお聞かせください。**
+
+例えば：
+- `project-coro` で実行したいタスクは何ですか？
+- コードのデプロイ、設定変更、ファイル操作など？
+
+または、Slackの #ai
