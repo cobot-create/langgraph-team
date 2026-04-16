@@ -2637,3 +2637,15 @@ sed -n '410,450p' ~/langgraph-team/server.py
 
 例えば：
 - 
+
+### auto-trigger 2026-04-16 21:23 JST
+- session_id: project-project-coro-1776342195.719649
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+sed -n '410,450p' ~/langgraph-team/server.py
+結果を #ai-
+- result: 実行結果:
+【指令】を受信しました。ただ、`project-coro` というタグのみで具体的なタスク内容が含まれていないようです。
+
+実行する指示の内容を教えていただけますか？（例: 特定のファイル操作、スクリプト実行、Slack報告など）
