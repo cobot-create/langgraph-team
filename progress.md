@@ -2079,3 +2079,12 @@ _SL-185: API キー消失問題 Phase 2 - 恒久修正_
 Phase 1で根本原因確定: env.confの古いXAI_API_KEY がsystemd
 - result: 実行結果:
 (no output from coro)
+
+### auto-trigger 2026-04-16 14:21 JST
+- session_id: project-project-coro-1776316854.060529
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+_SL-185: Phase 2 再実行 - sudoers NOPASSWD設定済み_
+VPS（133.167.77.17）にSSHして以下を順番に実行し、全結果を
+- result: 実行結果:
+(no output from coro)
