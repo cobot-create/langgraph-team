@@ -2192,3 +2192,16 @@ VPS（133.167.77.17）にSSHし
    - コマンド実行？
    - Slack報告？
    - 何か
+
+### auto-trigger 2026-04-16 14:55 JST
+- session_id: project-project-coro-1776318819.395539
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（133.167.77.17）にSSHして、以下のスクリプトを作成・実行し、全出力を報告してください。
+cat &lt;&lt; 'SCRIPT' &gt; /
+- result: 実行結果:
+#ai-opsに報告しました。
+
+**状況:**
+- VPS（133.167.77.17）へのSSH接続: このWindowsマシンからはタイムアウト（port 22 接続不可）
+- CLAUDE.mdの制約: 「SSH直接不可 → Slack #ai-ops 経由 Claude Cod
