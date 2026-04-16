@@ -2333,3 +2333,18 @@ VPS（ubuntu@133.167.77.17）でシェルコマンドを実行してください
 
 - **ステップ1（git push）**: 成功。コミットハッシュ `b19957a`、`main`ブランチにpush済み
 - **ステップ2（project-autoloop server.py確認）**: `/home
+
+### auto-trigger 2026-04-16 17:16 JST
+- session_id: project-project-coro-1776327311.186599
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で以下を実行してください。
+ステップ1: langgraph-team/server.py の全ルート一覧
+実行: 
+- result: 実行結果:
+#ai-ops への報告完了です。
+
+**調査結果サマリー:**
+- server.py は **515行**
+- エンドポイント: `GET /health`, `POST /run`, Slack Events (message + app_mention)
+- **重要発見**: 
