@@ -2363,3 +2363,13 @@ VPS（ubuntu@133.167.77.17）で実行してください。
 - VPS (`ubuntu@133.167.77.17`) から `server.py` を取得 (515行)
 - 4分割で #ai-ops に全内容を投稿済み
 - **重要所見**: `extract_full_tex
+
+### auto-trigger 2026-04-16 17:28 JST
+- session_id: project-project-coro-1776327942.395119
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で以下を順番に実行してください。
+ステップ1: バックアップ
+実行: cp /home/ubuntu/langgra
+- result: 実行結果:
+(no output from coro)
