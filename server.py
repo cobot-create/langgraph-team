@@ -51,27 +51,6 @@ def extract_full_text_from_blocks(event: dict) -> str:
 # Bot自身のユーザーIDを環境変数で管理（自己応答ループ防止）
 BOT_USER_ID = os.getenv("SLACK_BOT_USER_ID", "")
 
-def extract_full_text_from_blocks(event: dict) -> str:
-    """Slack event の blocks から完全なテキストを再構成する。"""
-    blocks = event.get("blocks", [])
-    if not blocks:
-        return event.get("text", "")
-    parts = []
-    for block in blocks:
-        if block.get("type") != "rich_text":
-            continue
-        for element in block.get("elements", []):
-            etype = element.get("type", "")
-            if etype in ("rich_text_section", "rich_text_preformatted", "rich_text_list"):
-                for item in element.get("elements", []):
-                    if item.get("type") == "text":
-                        parts.append(item.get("text", ""))
-                    elif item.get("type") == "link":
-                        parts.append(item.get("url", ""))
-                if etype == "rich_text_preformatted" and parts and not parts[-1].endswith("\n"):
-                    parts.append("\n")
-    full_text = "".join(parts).strip()
-    return full_text if full_text else event.get("text", "")
 slack_client = None
 
 if SLACK_BOT_TOKEN:
@@ -509,6 +488,21 @@ async def run_api(request: Request):
             final_messages.append(msg.content if hasattr(msg, "content") else str(msg))
     return {"status": "completed", "session_id": session_id, "messages": final_messages,
             "task_status": result.get("task_status", "unknown") if result else "error"}
+
+
+@fastapi_app.get("/threads/{thread_id}")
+async def get_thread_state(thread_id: str):
+    """SL-187: LangGraph thread state API"""
+    try:
+        config={"configurable":{"thread_id":thread_id}}
+        state=langgraph_app.get_state(config)
+        if not state or not state.values:
+            return JSONResponse(status_code=404,content={"error":"Thread not found","thread_id":thread_id})
+        msgs=[{"role":type(m).__name__,"content":getattr(m,"content",str(m))} for m in state.values.get("messages",[])]
+        return {"thread_id":thread_id,"status":"ok","messages":msgs,"next":list(state.next) if state.next else []}
+    except Exception as e:
+        logger.error(f"/threads error: {e}")
+        return JSONResponse(status_code=404,content={"error":str(e),"thread_id":thread_id})
 
 if __name__ == "__main__":
     import uvicorn
