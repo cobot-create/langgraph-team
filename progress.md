@@ -2422,3 +2422,18 @@ VPS（ubuntu@133.167.77.17）で以下を順番に実行してください。
 | 確認項目 | 結果 |
 |---|---|
 | graph.py ノード数 | 7ノード（supervisor/grok/mem0_search/mem0_write/reflection/evolution/re
+
+### auto-trigger 2026-04-16 19:38 JST
+- session_id: project-project-coro-1776335817.115079
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で以下を実行してください。
+ステップ1: server.pyのrun_langgraph関数の行番号を確認
+実行: 
+- result: 実行結果:
+#ai-ops に報告完了しました。
+
+**実行結果まとめ:**
+
+- **L205**: `def run_langgraph(query, slack_channel="", slack_thread_ts="", session_id=None, agent_name="")`
+-
