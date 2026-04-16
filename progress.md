@@ -2451,3 +2451,12 @@ L205: de
 - **project-coro について質問したい**
 - **特定のコマンドを実行したい**
 - **スラッシュコマンド `/project-coro` を実行したい*
+
+### auto-trigger 2026-04-16 19:44 JST
+- session_id: project-project-coro-1776336010.188059
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で以下を順番に実行してください。SL-188: checkpoint→Mem0 auto-write 実装。
+ステッ
+- result: 実行結果:
+(no output from coro)
