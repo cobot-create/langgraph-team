@@ -2758,3 +2758,16 @@ curl -s -X POST http://100.81.198.99:8080/mem0/search
 - coroプロジェクトの特定ファイルを修正・確認する
 - Slack #ai-ops へ報告する
 - 特定のスクリプ
+
+### auto-trigger 2026-04-16 23:20 JST
+- session_id: project-project-coro-1776349166.999799
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+curl -s -X POST http://localhost:8888/search -H "Cont
+- result: 実行結果:
+【指令】を受信しました。ただ「project-coro」のみでは具体的なタスクが不明です。
+
+以下を教えてください：
+- project-coro で実行したい具体的な作業内容は何ですか？
+  - 例：セットアップ、デバッグ、ファイル作成、デプロイ、etc.
