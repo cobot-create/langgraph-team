@@ -2205,3 +2205,17 @@ cat &lt;&lt; 'SCRIPT' &gt; /
 **状況:**
 - VPS（133.167.77.17）へのSSH接続: このWindowsマシンからはタイムアウト（port 22 接続不可）
 - CLAUDE.mdの制約: 「SSH直接不可 → Slack #ai-ops 経由 Claude Cod
+
+### auto-trigger 2026-04-16 14:59 JST
+- session_id: project-project-coro-1776318949.707609
+- mode: E, project: project-coro
+- query: 【指令】project-coro 受信・実行試行報告（coro Claude Code）
+*SL-185: APIキー再消失防止 徹底検証*
+VPS（133.167.77.17）へのSSH接続を試みま
+- result: 実行結果:
+#ai-ops に報告しました。
+
+**状況まとめ:**
+- coro (Windows) → VPS 133.167.77.17 への SSH はタイムアウト（今回も前回セッションと同様）
+- 受信した指令は `【指令】project-coro` のみ（blocks詳細なし）
+- 未実
