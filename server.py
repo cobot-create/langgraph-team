@@ -15,6 +15,7 @@ load_dotenv()
 from langchain_core.messages import HumanMessage
 from graph import app as langgraph_app
 from state import TeamState
+import mission_engine
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("langgraph-team")
@@ -24,15 +25,62 @@ AI_OPS_CHANNEL_ID = os.getenv("SLACK_CHANNEL_AI_OPS_ID", "C0AL5DRAY15")
 AI_OPS_CHANNEL = os.getenv("SLACK_CHANNEL_AI_OPS", "ai-ops")
 
 # SL-161: 自動トリガーフィルタキーワード
-AI_OPS_TRIGGER_KEYWORDS = ["🎯", ":dart:", "【指令】", "【instruction】"]
+AI_OPS_TRIGGER_KEYWORDS = ["🎯", ":dart:", "【指令】", "【instruction】", "mission-add", "mission-list", "mission-retry", "mission-skip"]
+
+def extract_full_text_from_blocks(event: dict) -> str:
+    blocks = event.get("blocks", [])
+    if not blocks:
+        return event.get("text", "")
+    parts = []
+    for block in blocks:
+        if block.get("type") != "rich_text":
+            continue
+        for element in block.get("elements", []):
+            etype = element.get("type", "")
+            if etype in ("rich_text_section", "rich_text_preformatted", "rich_text_list"):
+                for item in element.get("elements", []):
+                    if item.get("type") == "text":
+                        parts.append(item.get("text", ""))
+                    elif item.get("type") == "link":
+                        parts.append(item.get("url", ""))
+                if etype == "rich_text_preformatted" and parts and not parts[-1].endswith(chr(10)):
+                    parts.append(chr(10))
+    full_text = "".join(parts).strip()
+    return full_text if full_text else event.get("text", "")
+
 # Bot自身のユーザーIDを環境変数で管理（自己応答ループ防止）
 BOT_USER_ID = os.getenv("SLACK_BOT_USER_ID", "")
+
+def extract_full_text_from_blocks(event: dict) -> str:
+    """Slack event の blocks から完全なテキストを再構成する。"""
+    blocks = event.get("blocks", [])
+    if not blocks:
+        return event.get("text", "")
+    parts = []
+    for block in blocks:
+        if block.get("type") != "rich_text":
+            continue
+        for element in block.get("elements", []):
+            etype = element.get("type", "")
+            if etype in ("rich_text_section", "rich_text_preformatted", "rich_text_list"):
+                for item in element.get("elements", []):
+                    if item.get("type") == "text":
+                        parts.append(item.get("text", ""))
+                    elif item.get("type") == "link":
+                        parts.append(item.get("url", ""))
+                if etype == "rich_text_preformatted" and parts and not parts[-1].endswith("\n"):
+                    parts.append("\n")
+    full_text = "".join(parts).strip()
+    return full_text if full_text else event.get("text", "")
 slack_client = None
 
 if SLACK_BOT_TOKEN:
     from slack_sdk import WebClient
     slack_client = WebClient(token=SLACK_BOT_TOKEN)
     logger.info("Slack WebClient initialized")
+_ALF="/home/ubuntu/langgraph-team/autoloop.flag"
+_alr=False
+_alt=None
 
 SESSION_ID = os.getenv("SESSION_ID", f"SL-{datetime.now().strftime('%Y%m%d%H%M')}")
 
@@ -40,6 +88,52 @@ SESSION_ID = os.getenv("SESSION_ID", f"SL-{datetime.now().strftime('%Y%m%d%H%M')
 # ============================================================
 # SL-151: session_id generation (thread_ts → session continuity)
 # ============================================================
+
+def _alon(sc,ch,ts):
+    global _alr
+    if _alr:
+        sc and sc.chat_postMessage(channel=ch,thread_ts=ts,text="already ON")
+        return
+    import json as _j
+    _j.dump({"s":"on"},open(_ALF,"w"))
+    _alr=True
+    sc and sc.chat_postMessage(channel=ch,thread_ts=ts,text=":white_check_mark: autoloop ON")
+    mission_engine.on_autoloop_on(sc, ch)
+def _aloff(sc,ch,ts):
+    global _alr
+    _alr=False
+    import os as _o
+    _o.path.exists(_ALF) and _o.remove(_ALF)
+    sc and sc.chat_postMessage(channel=ch,thread_ts=ts,text=":octagonal_sign: autoloop OFF")
+def _alstatus(sc,ch,ts):
+    msg = mission_engine.mission_status()
+    sc and sc.chat_postMessage(channel=ch,thread_ts=ts,text=msg)
+
+
+
+def _extract_text_from_blocks(blocks):
+    parts = []
+    for block in blocks:
+        btype = block.get("type", "")
+        if btype == "rich_text":
+            for elem in block.get("elements", []):
+                etype = elem.get("type", "")
+                if etype in ("rich_text_section", "rich_text_preformatted", "rich_text_list"):
+                    line = []
+                    for sub in elem.get("elements", []):
+                        stype = sub.get("type", "")
+                        if stype == "text":
+                            line.append(sub.get("text", ""))
+                        elif stype == "link":
+                            line.append(sub.get("text") or sub.get("url", ""))
+                        elif stype == "user":
+                            line.append("<@" + sub.get("user_id", "") + ">")
+                    parts.append("".join(line))
+        elif btype == "section":
+            txt = block.get("text", {})
+            if txt.get("text"):
+                parts.append(txt["text"])
+    return chr(10).join(p for p in parts if p).strip()
 
 def get_session_id(event: dict) -> str:
     """
@@ -158,6 +252,16 @@ def run_langgraph(query, slack_channel="", slack_thread_ts="", session_id=None, 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    if os.path.exists(_ALF):
+        global _alr,_alt
+        import threading,time
+        _alr=True
+        def _rwk():
+            while _alr: time.sleep(30)
+        _alt=threading.Thread(target=_rwk,daemon=True)
+        _alt.start()
+        logger.info("[autoloop] restored ON")
+        mission_engine.on_autoloop_on()
     logger.info("LangGraph AI Team starting (Events API mode v4 - session_id support)")
     yield
 
@@ -188,7 +292,13 @@ async def slack_events(request: Request):
     # SL-161: #ai-ops message イベント → 自動トリガー
     if event_type == "message" and slack_client:
         channel = event.get("channel", "")
-        text = event.get("text", "")
+        text_for_trigger = event.get("text", "")
+        text = extract_full_text_from_blocks(event)
+        _blk = event.get("blocks", [])
+        if _blk:
+            _bt = _extract_text_from_blocks(_blk)
+            if _bt and len(_bt) > len(text):
+                text = _bt
         user = event.get("user", "")
         ts = event.get("ts", "")
         subtype = event.get("subtype", "")
@@ -197,7 +307,13 @@ async def slack_events(request: Request):
         is_ai_ops = channel == AI_OPS_CHANNEL_ID
         is_new_msg = not subtype  # subtypeなし = 新規投稿
         is_not_bot = user != BOT_USER_ID and not event.get("bot_id")
-        has_trigger = any(kw in text for kw in AI_OPS_TRIGGER_KEYWORDS)
+        has_trigger = any(kw in text for kw in AI_OPS_TRIGGER_KEYWORDS) or any(kw in text_for_trigger for kw in AI_OPS_TRIGGER_KEYWORDS) or any(kw in text_for_trigger for kw in AI_OPS_TRIGGER_KEYWORDS)
+
+        # waiting_user ミッション再開チェック（スレッド返信）
+        _tts = event.get("thread_ts")
+        if is_ai_ops and is_not_bot and _tts and _tts != ts:
+            if mission_engine.resume_from_thread(_tts, text):
+                return JSONResponse(content={"ok": True})
 
         # DEBUG: 条件診断ログ (SL-172)
         logger.info(
@@ -222,8 +338,31 @@ async def slack_events(request: Request):
 
             def _run_ai_ops_trigger():
                 try:
+                    if "langgraph-on" in text:
+                        _alon(slack_client,channel,ts); return
+                    if "langgraph-off" in text:
+                        _aloff(slack_client,channel,ts); return
+                    if "langgraph-status" in text:
+                        _alstatus(slack_client,channel,ts); return
+                    if "mission-add" in text:
+                        _m = re.search(r'mission-add\s+(.*)', text, re.DOTALL)
+                        _mt = _m.group(1).strip() if _m else text
+                        _mt = _mt.split("使用して送信されました")[0].strip() if "使用して送信されました" in _mt else _mt
+                        mission_engine.mission_add(_mt, slack_client, channel, ts); return
+                    if "mission-list" in text:
+                        _m = re.search(r'mission-list\s*(\w+)?', text)
+                        _fs = _m.group(1) if _m and _m.group(1) else None
+                        mission_engine.mission_list(slack_client, channel, ts, filter_status=_fs); return
+                    if "mission-retry" in text:
+                        _m = re.search(r'mission-retry\s+(m-\S+)', text)
+                        _mid = _m.group(1) if _m else ""
+                        mission_engine.mission_retry(_mid, slack_client, channel, ts); return
+                    if "mission-skip" in text:
+                        _m = re.search(r'mission-skip\s+(m-\S+)', text)
+                        _mid = _m.group(1) if _m else ""
+                        mission_engine.mission_skip(_mid, slack_client, channel, ts); return
                     # SL-172 v6: Mode A/B/C/D 実行制御
-                    from executor import get_project_config, resolve_execution_mode, execute_instruction
+                    import importlib, executor as _em; importlib.reload(_em); from executor import get_project_config, resolve_execution_mode, execute_instruction
                     proj_match = re.search(r'project-[a-z0-9][a-z0-9-]*', text)
                     project_id = proj_match.group(0) if proj_match else "default"
                     config = get_project_config(project_id)
@@ -248,13 +387,15 @@ async def slack_events(request: Request):
                     if mode == "E":
                         # Mode E: coro委譲 VPS→Tailscale SSH→Claude Code@coro
                         import subprocess as _sp
-                        _safe = text.replace(chr(39), chr(39)+chr(92)+chr(39)+chr(39))
+                        # SL-185: 「使用して送信されました」サフィックスを除去してからclaude -pに渡す
+                        _clean = text.split("使用して送信されました")[0].strip() if "使用して送信されました" in text else text
+                        _safe = _clean.replace(chr(39), chr(39)+chr(92)+chr(39)+chr(39))
                         _r = _sp.run(
                             ["ssh","-o","StrictHostKeyChecking=no","-o","ConnectTimeout=30",
                              "-o","IdentitiesOnly=yes","-i",os.path.expanduser("~/.ssh/id_ed25519"),
                              "manag@100.116.84.60",
-                             f"claude -p '{_safe}' 2>&1 | tail -80"],
-                            capture_output=True, timeout=120
+                             f"claude -p '{_safe}'"],
+                            capture_output=True, timeout=300
                         )
                         exec_result = (_r.stdout.decode("utf-8",errors="replace").strip() or _r.stderr.decode("utf-8",errors="replace").strip() or "(no output from coro)")
 
@@ -305,7 +446,8 @@ async def slack_events(request: Request):
             threading.Thread(target=_run_ai_ops_trigger, daemon=True).start()
 
     if event_type == "app_mention" and slack_client:
-        text = event.get("text", "")
+        text_for_trigger = event.get("text", "")
+        text = extract_full_text_from_blocks(event)
         channel = event.get("channel", "")
         thread_ts = event.get("ts", "")
         user = event.get("user", "")
