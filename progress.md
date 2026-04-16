@@ -2664,3 +2664,19 @@ sed -n '410,450p' ~/langgraph-team/server.py
 - `server.py` L410-450 の内容を取得
 - **Mode D** (L410-411): 半自動モード（手動実行待ち）
 - **Mode E** (L412-425): VPS → Tailscale
+
+### auto-trigger 2026-04-16 21:29 JST
+- session_id: project-project-coro-1776342456.624739
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+python3 -c "import subprocess,os; r=subprocess.run(['
+- result: 実行結果:
+#ai-ops に報告完了しました。
+
+**結果サマリー:**
+
+- `stdout: b'\x83e\x83X\x83g\x93\xfa\x96{\x8c\xea\r\n'`
+- `stderr: b''`
+
+**根本原因**: coro（manag@100.116.84.60）のSS
