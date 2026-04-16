@@ -2771,3 +2771,17 @@ curl -s -X POST http://localhost:8888/search -H "Cont
 以下を教えてください：
 - project-coro で実行したい具体的な作業内容は何ですか？
   - 例：セットアップ、デバッグ、ファイル作成、デプロイ、etc.
+
+### auto-trigger 2026-04-17 00:07 JST
+- session_id: project-project-coro-1776351912.561419
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+以下を実行して結果を #ai-ops に報告してください。
+確認項目: この本文（3行の指示）が全て届いているかのテストです。
+- result: 実行結果:
+#ai-ops への報告完了しました。
+
+**実行結果サマリー:**
+
+- **指令受信確認**: 3行の指示すべて完全に受信できています
+- **grep結果**: `session_handoff` / `domain.expansion` / `CLAUDE_PROMPT` / `
