@@ -2114,3 +2114,12 @@ VPS（133.167.77.17）にSSHして以下を実行してください。
 _Step 1: auto-
 - result: 実行結果:
 (no output from coro)
+
+### auto-trigger 2026-04-16 14:41 JST
+- session_id: project-project-coro-1776317985.115359
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+_SL-185: auto-trigger メッセージ転送修正_
+auto-triggerが【指令】を検知しても、coro側に指令内容が正しく渡っていない。serve
+- result: 実行結果:
+(no output from coro)
