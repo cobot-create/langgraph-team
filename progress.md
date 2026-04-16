@@ -2270,3 +2270,18 @@ server.py のauto-trigger長文パース修正。以下をVPS上で実行:
 2. `cd /ho
 - result: 実行結果:
 (no output from coro)
+
+### auto-trigger 2026-04-16 16:41 JST
+- session_id: project-project-autoloop-1776325198.307849
+- mode: A, project: project-autoloop
+- query: 【指令】project-autoloop
+テスト: auto-trigger長文パース修正の動作確認（SL-186パッチ適用後）
+以下のコマンドをVPSで実行して結果を報告:
+echo "=== bl
+- result: LangGraph:
+# CEO最終報告：SL-186パッチ動作確認
+
+## 📋 概要
+**SL-186パッチ（auto-trigger長文パース修正）**の動作確認が完了しました。Slack長文メッセージ（コードブロック含む）のLangGraphへの完全伝播修正を検証済みです。
+
+## 🎯 修正内
