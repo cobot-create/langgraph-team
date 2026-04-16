@@ -2528,3 +2528,17 @@ grep -A 20 "def mem0_write" ~/langgraph-team/tools_me
 **実行結果の要点:**
 - `mem0_write` 関数のシグネチャを確認。`metadata_type` のデフォルトは `"knowledge"`
 - SL-188で使用した `"checkpoint_summary"` は受け付けるが、M
+
+### auto-trigger 2026-04-16 20:05 JST
+- session_id: project-project-coro-1776337448.824579
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+cd ~/langgraph-team && python3 -c "from tools_mem0 im
+- result: 実行結果:
+#ai-ops に報告完了しました。
+
+**実行結果サマリー:**
+
+- `mem0_write` はStructuredToolのため直接呼び出し不可 → `.func()` で回避して実行
+- **Bug 2 再現確認**: `results: []` — Mem0 LLMが `ch
