@@ -2605,3 +2605,16 @@ grep -n "Mode E|mode_e|modeE|mojibake|文字化" ~/langgrap
 - その他の操作
 
 具体的な指示内容をお知らせください。
+
+### auto-trigger 2026-04-16 21:21 JST
+- session_id: project-project-coro-1776341990.050499
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+grep -n "mode_e|encoding|garbled|decode" ~/langgraph-
+- result: 実行結果:
+#ai-ops に報告完了しました。
+
+**実行結果まとめ:**
+- VPS で `grep -n "mode_e|encoding|garbled|decode" ~/langgraph-team/server.py` を実行
+- ヒット: L426 のみ — `decode("utf
