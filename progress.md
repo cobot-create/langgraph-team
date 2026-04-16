@@ -2373,3 +2373,21 @@ VPS（ubuntu@133.167.77.17）で以下を順番に実行してください。
 実行: cp /home/ubuntu/langgra
 - result: 実行結果:
 (no output from coro)
+
+### auto-trigger 2026-04-16 17:32 JST
+- session_id: project-project-coro-1776328143.356399
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行してください。
+ステップ1: 既知のスレッドIDでAPIテスト
+実行: curl -s http://loca
+- result: 実行結果:
+#ai-ops への報告完了です。
+
+---
+
+**実行結果まとめ (SL-187 /threads API テスト)**
+
+| ステップ | コマンド | 結果 |
+|---|---|---|
+| 1 | GET /threads/project-autoloop-1776226006
