@@ -2649,3 +2649,18 @@ sed -n '410,450p' ~/langgraph-team/server.py
 【指令】を受信しました。ただ、`project-coro` というタグのみで具体的なタスク内容が含まれていないようです。
 
 実行する指示の内容を教えていただけますか？（例: 特定のファイル操作、スクリプト実行、Slack報告など）
+
+### auto-trigger 2026-04-16 21:26 JST
+- session_id: project-project-coro-1776342343.362419
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+sed -n '410,450p' ~/langgraph-team/server.py
+結果を #ai-
+- result: 実行結果:
+#ai-ops に報告完了しました。
+
+**実行結果サマリー:**
+- `server.py` L410-450 の内容を取得
+- **Mode D** (L410-411): 半自動モード（手動実行待ち）
+- **Mode E** (L412-425): VPS → Tailscale
