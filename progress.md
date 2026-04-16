@@ -2515,3 +2515,16 @@ curl -s -X POST http://localhost:8888/search -H "Cont
 **実行内容:**
 - VPS（ubuntu@133.167.77.17）で `curl POST http://localhost:8888/search` を実行
 - クエリ: `"checkpoint sl188"`、`user_id: "ai
+
+### auto-trigger 2026-04-16 20:03 JST
+- session_id: project-project-coro-1776337320.219829
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+grep -A 20 "def mem0_write" ~/langgraph-team/tools_me
+- result: 実行結果:
+#ai-ops に報告完了しました。
+
+**実行結果の要点:**
+- `mem0_write` 関数のシグネチャを確認。`metadata_type` のデフォルトは `"knowledge"`
+- SL-188で使用した `"checkpoint_summary"` は受け付けるが、M
