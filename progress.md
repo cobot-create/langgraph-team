@@ -2825,3 +2825,12 @@ server.py のMode E処理（L415〜420付近）を修正してください。
 修正箇所: _safe = _clean.replace(chr(39), ...
 - result: 実行結果:
 (no output from coro)
+
+### auto-trigger 2026-04-17 00:30 JST
+- session_id: project-project-coro-1776353264.619869
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+server.py のプロジェクト名検出ロジックを修正してください。
+現象: コードブロック(バッククォート3つ)を含むメッセージがproject-coroではなくs
+- result: 実行結果:
+(no output from coro)
