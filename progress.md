@@ -2575,3 +2575,17 @@ VPS（ubuntu@133.167.77.17）で実行:
 curl -s -X POST http://localhost:8888/memories -H "Co
 - result: 実行結果:
 (no output from coro)
+
+### auto-trigger 2026-04-16 21:17 JST
+- session_id: project-project-coro-1776341782.573779
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+cd ~/langgraph-team && grep -rn "文字化け|encoding|garble
+- result: 実行結果:
+`【指令】project-coro` を受け取りましたが、具体的な作業内容が含まれていないようです。
+
+次のどれかを教えてください：
+
+1. **Slackを確認** — #ai-ops チャンネルで最新の指令を確認する
+2. **domain-expansion** — セッション起動
