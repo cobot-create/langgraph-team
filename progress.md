@@ -2542,3 +2542,18 @@ cd ~/langgraph-team && python3 -c "from tools_mem0 im
 
 - `mem0_write` はStructuredToolのため直接呼び出し不可 → `.func()` で回避して実行
 - **Bug 2 再現確認**: `results: []` — Mem0 LLMが `ch
+
+### auto-trigger 2026-04-16 20:54 JST
+- session_id: project-project-coro-1776340399.128519
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+VPS（ubuntu@133.167.77.17）で実行:
+curl -s -X POST http://localhost:8888/memories -H "Co
+- result: 実行結果:
+`【指令】project-coro` を受信しました。
+
+ただし、メモリファイルが未初期化の状態で、指令の具体的な内容が不明です。
+
+**確認させてください**: `project-coro` とは何の作業を指しますか？
+
+- Mem0から前回の引き継ぎを取得してほしい場合は、Mem0接
