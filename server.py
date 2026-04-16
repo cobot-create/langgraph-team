@@ -227,6 +227,34 @@ def run_langgraph(query, slack_channel="", slack_thread_ts="", session_id=None, 
             for msg in node_output.get("messages", []):
                 logger.info(f"[{node_name}] {(msg.content if hasattr(msg, 'content') else str(msg))[:200]}")
             final_state = node_output
+    # === SL-188: checkpoint -> Mem0 auto-write ===
+    try:
+        from datetime import datetime as _dt
+        from tools_mem0 import mem0_write as _mem0_write
+        _config = {"configurable": {"thread_id": resolved_session_id}}
+        _ckpt = langgraph_app.get_state(_config)
+        if _ckpt and _ckpt.values:
+            _msgs = _ckpt.values.get("messages", [])
+            _parts = []
+            for _m in _msgs[-3:]:
+                _role = type(_m).__name__.replace("Message", "").lower()
+                _cnt = _m.content if hasattr(_m, "content") else str(_m)
+                if _cnt and len(_cnt) > 10:
+                    _parts.append("[" + _role + "] " + _cnt[:200])
+            if _parts:
+                _ts = _dt.now().strftime("%Y-%m-%d %H:%M")
+                _content = '[checkpoint-auto] ' + _ts + ' session=' + resolved_session_id + chr(10) + chr(10).join(_parts)
+                _mem0_write(
+                    content=_content,
+                    metadata_type="checkpoint_summary",
+                    session_id=resolved_session_id,
+                    date=_dt.now().strftime("%Y-%m-%d"),
+                    user_id="ai-team"
+                )
+                logger.info("checkpoint->Mem0 auto-write OK: " + resolved_session_id)
+    except Exception as _e:
+        logger.error("checkpoint->Mem0 write error (non-fatal): " + str(_e))
+    # === END SL-188 ===
     return final_state
 
 @asynccontextmanager
