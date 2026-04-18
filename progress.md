@@ -3091,3 +3091,10 @@ echo "=== PWD ==="
 
 - result: 実行結果:
 SL-193 E2Eテスト実行完了。`echo ===` の出力: `===`
+
+### auto-trigger 2026-04-18 18:29 JST
+- session_id: project-project-coro-1776504550.280959
+- mode: E, project: project-coro
+- query: 【指令】project-coro 次を実行: hostname && whoami && echo "newline-test-A" && echo "newline-test-B" && echo 
+- result: 実行結果:
+指令送信完了。60秒後にポーリング開始します。
