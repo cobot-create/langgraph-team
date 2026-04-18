@@ -2929,3 +2929,14 @@ journalctl -u langgraph-team --since "
 2. `curl` Mem0エンドポイント — 正常応答、session_handoffデータ取得成功 ✅
 
 SL-195 Problem2（URL修正 + Aut
+
+### auto-trigger 2026-04-18 15:27 JST
+- session_id: project-project-coro-1776493596.171049
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+SL-185 xAI + Anthropic APIキー環境の現状調査を実施してください。
+【目的】キー散在による失効再発（xAI 5回・Anthropic 複数回）
+- result: 実行結果:
+ローカルメモリは空です。Mem0はChrome MCP経由でのアクセスが必要ですが、現在この環境ではChrome MCPツールが利用できません。
+
+Mem0コンテキストを取得するには、`/domain-expansion` スキルを起動するか、Chrome MCPが有効な環境から実行して
