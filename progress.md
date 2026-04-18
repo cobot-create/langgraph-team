@@ -2883,3 +2883,14 @@ grep -n "100.
 指令「project-coro」を受信しましたが、具体的なアクションが含まれていません。
 
 Slackの#ai-opsチャンネルに詳細な指示がありますか？それとも、project-coroに関して実行すべき具体的なタスクを教えていただけますか？
+
+### auto-trigger 2026-04-18 10:42 JST
+- session_id: project-project-coro-1776476508.655529
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+あなたはcoro（Ubuntu サーバー）上のClaude Codeです。以下のファイルを修正してください。
+対象ファイル: /home/ubuntu/langgra
+- result: 実行結果:
+【指令】の受信を確認しましたが、"project-coro" の詳細が指令に含まれていません。
+
+**確認事項**: `project-coro` に関して具体的に何を実行すればよいでしょうか？指令の内容を教えてください。
