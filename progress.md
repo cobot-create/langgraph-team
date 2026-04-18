@@ -2988,3 +2988,12 @@ cd /home/ubuntu/langgraph-team && grep -
 - result: 実行結果:
 'sed' は、内部コマンドまたは外部コマンド、
 操作可能なプログラムまたはバッチ ファイルとして認識されていません。
+
+### auto-trigger 2026-04-18 16:09 JST
+- session_id: project-project-coro-1776496128.480979
+- mode: E, project: project-coro
+- query: 【指令】project-coro whoami && grep XAI_API_KEY /home/ubuntu/langgraph-team/.env | cut -c1-25 && stat -c
+- result: 実行結果:
+Mem0へのアクセスはChrome MCP javascript_tool経由が必要ですが、このセッションでは該当ツールが利用できません。
+
+`/domain-expansion`スキルを実行すれば起動処理（Mem0取得含む）が走りますが、Chrome MCPが接続されている環境でないと
