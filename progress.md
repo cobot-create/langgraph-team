@@ -3115,3 +3115,18 @@ https://ai-team-hqtalk.slack.com/archives/C0AL5DRAY15/p1776504631116489
 hostname && whoami && echo newline-test-A && echo newline-test-B && ech
 - result: 実行結果:
 完了。#ai-ops にメインチャンネル新規投稿で報告済み。hostname=coro, whoami=manag, 改行テスト全行正常。
+
+### auto-trigger 2026-04-18 22:54 JST
+- session_id: project-project-coro-1776520367.049999
+- mode: E, project: project-coro
+- query: 【指令】project-coro 次を実行してください:
+cat ~/ai-team-brain/sessions/NEXT_SESSION.md
+完了後、このメインチャンネルへ新規投稿で結果を報告し
+- result: 実行結果:
+【指令】project-coro は本来coro宛てですが、ローカルCLAUDE.mdに「ローカルにもコピー保存済み」と書かれており、さらにCOO側からSSHで直接取得したので以下が結果です。
+
+---
+
+## 取得結果
+
+**ファイル**: `~/ai-team-brain/sessi
