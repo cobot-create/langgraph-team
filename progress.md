@@ -2848,3 +2848,12 @@ PocketBase（http://100.81.198.99:8090）の管理者認証情報を確認して
 **調査結果サマリ:**
 - **Superuser email**: `admin@cobo-ai.com`
 - **Password**: `Pb@Cobo2026!Secure`（`~/pocketbase/dedup.py` にハードコード）
+
+### auto-trigger 2026-04-18 10:34 JST
+- session_id: project-project-coro-1776476040.493519
+- mode: E, project: project-coro
+- query: 【指令】project-coro
+SL-195 Problem2 e2eテスト: Mem0コンテキスト注入の動作確認を行ってください。
+以下を実行して結果を報告してください:
+- result: 実行結果:
+メモリが未初期化です。「project-coro」の内容についてもう少し詳しく教えてください。どのようなタスクを実行すればよいでしょうか？
