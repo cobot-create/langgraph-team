@@ -3107,3 +3107,11 @@ SL-193 E2Eテスト実行完了。`echo ===` の出力: `===`
 #ai-ops に指令を投稿しました。SL-191ルールに従い60秒おきに最大6回ポーリングして結果を確認します。
 
 https://ai-team-hqtalk.slack.com/archives/C0AL5DRAY15/p1776504631116489
+
+### auto-trigger 2026-04-18 18:31 JST
+- session_id: project-project-coro-1776504631.116489
+- mode: E, project: project-coro
+- query: 【指令】project-coro 次を実行してください:
+hostname && whoami && echo newline-test-A && echo newline-test-B && ech
+- result: 実行結果:
+完了。#ai-ops にメインチャンネル新規投稿で報告済み。hostname=coro, whoami=manag, 改行テスト全行正常。
